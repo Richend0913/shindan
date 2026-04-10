@@ -248,7 +248,7 @@ function showResult(){
       </a>
     </div>`;
   window.scrollTo({top:0,behavior:'smooth'});
-  // AdSense を動的に挿入 (template literal 内の </script> がメインスクリプトを壊すのを防ぐ)
+  // AdSense dynamic insert
   try{
     const ad=document.getElementById('ad-result');
     if(ad){ad.innerHTML='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6327505164684489" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>';(adsbygoogle=window.adsbygoogle||[]).push({});}
