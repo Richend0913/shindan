@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-63VB4HT3T2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-63VB4HT3T2');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>診断プレイヤー｜ShindanMaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;500;700&family=Noto+Sans+JP:wght@300;400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;min-height:100vh;line-height:1.9;transition:background .3s,color .3s}
+.container{max-width:560px;margin:0 auto;padding:20px 16px}
+.serif{font-family:'Noto Serif JP',serif}
+
+/* Loading */
+.loading{text-align:center;padding:100px 20px}
+.loading h2{font-size:1.1rem;color:#888;margin-bottom:8px}
+.loading p{font-size:.85rem;color:#aaa}
+
+/* Error */
+.error-screen{text-align:center;padding:80px 20px}
+.error-screen h2{font-size:1.2rem;margin-bottom:8px}
+.error-screen p{font-size:.88rem;color:#888;margin-bottom:24px}
+.error-screen a{display:inline-block;padding:10px 28px;background:#6c5ce7;color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:.88rem}
+
+/* Start */
+.start{text-align:center;padding:50px 0 30px}
+.start-deco{font-size:1.6rem;margin-bottom:16px;letter-spacing:8px}
+.start h1{font-family:'Noto Serif JP',serif;font-size:1.5rem;font-weight:500;margin-bottom:8px;letter-spacing:.05em}
+.start .sub{font-size:.88rem;margin-bottom:28px;opacity:.6}
+.start-img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid;margin-bottom:24px}
+.feats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+.feat{padding:6px 16px;border-radius:20px;font-size:.76rem;border:1px solid;box-shadow:0 1px 4px rgba(0,0,0,.03)}
+.btn-start{padding:16px 52px;color:#fff;border:none;border-radius:40px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .25s;letter-spacing:.06em}
+.btn-start:hover{transform:translateY(-2px)}
+
+/* Quiz */
+.progress{margin:16px 0 8px}
+.pbar{width:100%;height:4px;border-radius:2px;overflow:hidden}
+.pfill{height:100%;border-radius:2px;transition:width .4s ease}
+.ptext{text-align:center;font-size:.72rem;margin-top:6px;opacity:.5}
+.qcard{border:1px solid;border-radius:20px;padding:32px 24px;margin:16px 0;box-shadow:0 2px 16px rgba(0,0,0,.04);animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.qnum{font-family:'Noto Serif JP',serif;font-size:.78rem;font-weight:500;margin-bottom:6px}
+.qtxt{font-size:1.05rem;font-weight:500;margin-bottom:22px;line-height:1.7}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{padding:14px 18px;border:1.5px solid;border-radius:14px;cursor:pointer;font-size:.9rem;transition:all .2s}
+.opt:hover{transform:scale(1.01)}
+.opt:active{transform:scale(.98)}
+.opt.sel{font-weight:600}
+
+/* Result */
+.result{text-align:center;padding:20px 0;animation:fadeUp .5s ease}
+.r-label{font-family:'Noto Serif JP',serif;font-size:.85rem;margin-bottom:16px;letter-spacing:.1em;opacity:.6}
+.r-img-wrap{position:relative;display:inline-block;margin-bottom:20px}
+.r-img-bg{width:220px;height:220px;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.15}
+.r-img{width:200px;height:200px;border-radius:50%;object-fit:cover;border:4px solid;box-shadow:0 8px 40px rgba(0,0,0,.1);position:relative;z-index:1}
+.r-no-img{width:200px;height:200px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:4rem;box-shadow:0 8px 40px rgba(0,0,0,.1);position:relative;z-index:1}
+.r-name{font-family:'Noto Serif JP',serif;font-size:1.6rem;font-weight:700;margin-bottom:4px;letter-spacing:.04em}
+.r-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0 24px}
+.r-tag{padding:5px 16px;border-radius:20px;font-size:.76rem;font-weight:500;border:1.5px solid}
+.r-card{border:1px solid;border-radius:18px;padding:24px;margin-bottom:16px;text-align:left;box-shadow:0 2px 12px rgba(0,0,0,.03)}
+.r-card-title{font-family:'Noto Serif JP',serif;font-size:.88rem;font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.r-card p{font-size:.85rem;line-height:2;opacity:.7}
+.share{display:flex;gap:10px;justify-content:center;margin:20px 0}
+.share-btn{padding:10px 24px;border-radius:24px;border:none;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.03em}
+.share-btn.line{background:#06c755;color:#fff}
+.share-btn.x{background:#333;color:#fff}
+.share-btn:hover{opacity:.85;transform:translateY(-1px)}
+.footer{text-align:center;padding:32px 16px;font-size:.72rem;opacity:.4}
+.footer a{text-decoration:none}
+
+.back-link{display:block;text-align:center;margin:20px 0;font-size:.82rem;opacity:.5;text-decoration:none}
+.back-link:hover{opacity:.8}
+
+@media(max-width:420px){
+  .start h1{font-size:1.3rem}
+  .r-name{font-size:1.35rem}
+  .r-img,.r-no-img{width:170px;height:170px}
+  .r-img-bg{width:190px;height:190px}
+}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="loading" id="loadingScreen">
+    <h2>読み込み中...</h2>
+    <p>診断データを取得しています</p>
+  </div>
+</div>
+
+<script>
+const THEMES = {
+  pink:   { primary:'#c48ba0', light:'#d4a5b8', bg:'#faf7f4', bgDark:'#2a1a22', text:'#5a4a54', textDark:'#f0e0e8', border:'#ede5e8', borderDark:'rgba(255,255,255,.08)', card:'#ffffff', cardDark:'rgba(255,255,255,.05)', sub:'#a09098', subDark:'rgba(255,255,255,.5)', optBg:'#faf7f4', optBgDark:'rgba(255,255,255,.03)', optHover:'#fdf5f8', optHoverDark:'rgba(255,255,255,.08)' },
+  purple: { primary:'#6c5ce7', light:'#a29bfe', bg:'#f5f3ff', bgDark:'#1a1530', text:'#4a4060', textDark:'#e0d8f0', border:'#e8e0f0', borderDark:'rgba(255,255,255,.08)', card:'#ffffff', cardDark:'rgba(255,255,255,.05)', sub:'#9088a0', subDark:'rgba(255,255,255,.5)', optBg:'#f5f3ff', optBgDark:'rgba(255,255,255,.03)', optHover:'#ede8ff', optHoverDark:'rgba(255,255,255,.08)' },
+  blue:   { primary:'#0984e3', light:'#74b9ff', bg:'#f0f7ff', bgDark:'#0a1628', text:'#2d4a6a', textDark:'#d0e4f8', border:'#d8e8f5', borderDark:'rgba(255,255,255,.08)', card:'#ffffff', cardDark:'rgba(255,255,255,.05)', sub:'#7898b0', subDark:'rgba(255,255,255,.5)', optBg:'#f0f7ff', optBgDark:'rgba(255,255,255,.03)', optHover:'#e0f0ff', optHoverDark:'rgba(255,255,255,.08)' },
+  green:  { primary:'#00b894', light:'#55efc4', bg:'#f0faf5', bgDark:'#0a2018', text:'#2a5a44', textDark:'#d0f0e0', border:'#d0e8d8', borderDark:'rgba(255,255,255,.08)', card:'#ffffff', cardDark:'rgba(255,255,255,.05)', sub:'#78a890', subDark:'rgba(255,255,255,.5)', optBg:'#f0faf5', optBgDark:'rgba(255,255,255,.03)', optHover:'#e0f8ee', optHoverDark:'rgba(255,255,255,.08)' },
+  orange: { primary:'#e17055', light:'#fdcb6e', bg:'#fff8f0', bgDark:'#2a1810', text:'#5a3a2a', textDark:'#f8e0d0', border:'#f0e0d0', borderDark:'rgba(255,255,255,.08)', card:'#ffffff', cardDark:'rgba(255,255,255,.05)', sub:'#b09080', subDark:'rgba(255,255,255,.5)', optBg:'#fff8f0', optBgDark:'rgba(255,255,255,.03)', optHover:'#fff0e0', optHoverDark:'rgba(255,255,255,.08)' },
+  mono:   { primary:'#636e72', light:'#b2bec3', bg:'#f5f5f5', bgDark:'#1a1a1a', text:'#4a4a4a', textDark:'#d0d0d0', border:'#e0e0e0', borderDark:'rgba(255,255,255,.08)', card:'#ffffff', cardDark:'rgba(255,255,255,.05)', sub:'#999999', subDark:'rgba(255,255,255,.5)', optBg:'#f5f5f5', optBgDark:'rgba(255,255,255,.03)', optHover:'#ececec', optHoverDark:'rgba(255,255,255,.08)' }
+};
+
+let diagData = null;
+let theme = null;
+let isDark = false;
+let cur = 0;
+let scores = [];
+
+// Load data
+function loadData() {
+  const params = new URLSearchParams(location.search);
+  let raw = null;
+
+  if (params.get('preview') === 'local') {
+    raw = localStorage.getItem('shindan_preview');
+  } else if (params.get('id')) {
+    raw = localStorage.getItem('shindan_published_' + params.get('id'));
+  }
+
+  if (!raw) {
+    showError();
+    return;
+  }
+
+  try {
+    diagData = JSON.parse(raw);
+    theme = THEMES[diagData.theme] || THEMES.pink;
+    isDark = diagData.bgStyle === 'dark';
+    scores = new Array(diagData.types.length).fill(0);
+    applyTheme();
+    showStart();
+  } catch(e) {
+    showError();
+  }
+}
+
+function applyTheme() {
+  const d = isDark;
+  document.body.style.background = d ? theme.bgDark : theme.bg;
+  document.body.style.color = d ? theme.textDark : theme.text;
+}
+
+function T(prop) {
+  return isDark ? theme[prop + 'Dark'] : theme[prop];
+}
+
+function showError() {
+  document.getElementById('app').innerHTML = `
+    <div class="error-screen">
+      <h2>診断が見つかりません</h2>
+      <p>データが存在しないか、URLが正しくありません。</p>
+      <a href="./">ホームに戻る</a>
+    </div>`;
+}
+
+function showStart() {
+  const d = diagData;
+  document.getElementById('app').innerHTML = `
+    <div id="screen-start">
+      <div class="start">
+        <div class="start-deco" style="color:${theme.light}">&#10022; &#10022; &#10022;</div>
+        <h1 class="serif">${esc(d.title)}</h1>
+        <p class="sub">${esc(d.description)}</p>
+        <div class="feats">
+          <span class="feat" style="background:${T('card')};border-color:${T('border')};color:${T('sub')}">&#x1F193; 完全無料</span>
+          <span class="feat" style="background:${T('card')};border-color:${T('border')};color:${T('sub')}">&#x23F1; 約${d.questions.length > 5 ? '3' : '2'}分</span>
+          <span class="feat" style="background:${T('card')};border-color:${T('border')};color:${T('sub')}">&#x1F3AF; ${d.types.length}タイプ</span>
+        </div>
+        <button class="btn-start" style="background:linear-gradient(135deg,${theme.light},${theme.primary});box-shadow:0 4px 20px ${theme.primary}40" onclick="startQuiz()">診断をはじめる</button>
+      </div>
+    </div>
+    <div id="screen-quiz" style="display:none">
+      <div class="progress">
+        <div class="pbar" style="background:${T('border')}"><div class="pfill" id="progress" style="width:0%;background:linear-gradient(90deg,${theme.light},${theme.primary})"></div></div>
+        <div class="ptext" id="ptext" style="color:${T('sub')}"></div>
+      </div>
+      <div id="qarea"></div>
+    </div>
+    <div id="screen-result" style="display:none"></div>
+    <a class="back-link" href="./" style="color:${T('sub')}">ShindanMaker で診断を作る</a>
+    <div class="footer" style="color:${T('sub')}">&copy; 2026 ShindanMaker</div>`;
+  document.title = d.title + '｜ShindanMaker';
+}
+
+function startQuiz() {
+  document.getElementById('screen-start').style.display = 'none';
+  document.getElementById('screen-quiz').style.display = 'block';
+  gtag('event','quiz_start',{quiz: diagData.title});
+  showQ();
+}
+
+function showQ() {
+  const q = diagData.questions[cur];
+  document.getElementById('progress').style.width = (cur / diagData.questions.length * 100) + '%';
+  document.getElementById('ptext').textContent = (cur+1) + ' / ' + diagData.questions.length;
+
+  let h = `<div class="qcard" style="background:${T('card')};border-color:${T('border')}">
+    <div class="qnum" style="color:${theme.primary}">Q${cur+1}</div>
+    <div class="qtxt">${esc(q.text)}</div>
+    <div class="opts">`;
+  q.choices.forEach((c,i) => {
+    h += `<div class="opt" style="background:${T('optBg')};border-color:${T('border')}"
+      onmouseover="this.style.borderColor='${theme.primary}';this.style.background='${T('optHover')}'"
+      onmouseout="this.style.borderColor='${T('border')}';this.style.background='${T('optBg')}'"
+      onclick="pick(${i})">${esc(c.text)}</div>`;
+  });
+  h += '</div></div>';
+  document.getElementById('qarea').innerHTML = h;
+}
+
+function pick(i) {
+  const q = diagData.questions[cur];
+  const ti = q.choices[i].typeIndex;
+  if (ti >= 0 && ti < scores.length) scores[ti]++;
+
+  const opts = document.querySelectorAll('.opt');
+  opts[i].classList.add('sel');
+  opts[i].style.borderColor = theme.primary;
+  opts[i].style.background = theme.primary + '18';
+  opts[i].style.color = theme.primary;
+
+  setTimeout(() => {
+    cur++;
+    if (cur < diagData.questions.length) showQ();
+    else showResult();
+  }, 280);
+}
+
+function showResult() {
+  document.getElementById('screen-quiz').style.display = 'none';
+  document.getElementById('screen-result').style.display = 'block';
+
+  let mx = 0, mi = 0;
+  scores.forEach((v,i) => { if (v > mx) { mx = v; mi = i; } });
+  const r = diagData.types[mi];
+  gtag('event','quiz_complete',{quiz: diagData.title, type: r.name});
+
+  const tags = (r.tags || '').split(',').filter(Boolean).map(t =>
+    `<span class="r-tag" style="color:${theme.primary};border-color:${theme.primary}30;background:${T('card')}">${t.trim()}</span>`
+  ).join('');
+
+  const imgH = r.image
+    ? `<div class="r-img-wrap"><div class="r-img-bg" style="background:${theme.primary}"></div><img class="r-img" style="border-color:${T('card')}" src="${esc(r.image)}" alt="${esc(r.name)}"></div>`
+    : `<div class="r-img-wrap"><div class="r-img-bg" style="background:${theme.primary}"></div><div class="r-no-img" style="background:${theme.primary}18;border:4px solid ${T('card')}">&#x2728;</div></div>`;
+
+  const url = encodeURIComponent(location.href);
+  const shareTxt = encodeURIComponent(`${r.name}だった！ あなたもやってみて`);
+
+  document.getElementById('screen-result').innerHTML = `
+    <div class="result">
+      <div class="r-label serif">あなたの結果は</div>
+      ${imgH}
+      <div class="r-name serif" style="color:${theme.primary}">${esc(r.name)}</div>
+      <div class="r-tags">${tags}</div>
+      ${r.description ? `<div class="r-card" style="background:${T('card')};border-color:${T('border')}"><div class="r-card-title">&#x1F4CB; 詳細</div><p>${esc(r.description)}</p></div>` : ''}
+      <div class="share">
+        <button class="share-btn line" onclick="window.open('https://social-plugins.line.me/lineit/share?url=${url}&text=${shareTxt}','_blank')">LINEで共有</button>
+        <button class="share-btn x" onclick="window.open('https://twitter.com/intent/tweet?text=${shareTxt}&url=${url}','_blank')">Xで共有</button>
+      </div>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// Boot
+loadData();
+</script>
+</body>
+</html>
