@@ -4,7 +4,6 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-63VB4HT3T2"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-63VB4HT3T2');</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6327505164684489" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>前世診断｜あなたの前世は何だった？魂の記憶を解き明かす</title>
@@ -95,6 +94,19 @@ body{font-family:'Noto Sans JP',sans-serif;background:#faf7f4;color:#4a4a4a;min-
 
 /* 広告 */
 .ad-slot{margin:20px 0}
+
+/* アフィリエイトCTA */
+.aff{background:linear-gradient(135deg,#fdf5f8,#f8eff4);border:1px solid #ede0e8;border-radius:18px;padding:22px 20px;margin:8px 0 16px;text-align:center}
+.aff-head{font-size:.95rem;color:#8a5a70;font-weight:700;margin-bottom:4px}
+.aff-sub{font-size:.78rem;color:#a89098;margin-bottom:16px}
+.aff-card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #ede5e8;border-radius:14px;padding:14px 16px;margin-bottom:10px;text-decoration:none;text-align:left;transition:all .2s;box-shadow:0 1px 6px rgba(0,0,0,.03)}
+.aff-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(196,139,160,.18);border-color:#d4a5b8}
+.aff-ic{font-size:1.6rem;flex-shrink:0}
+.aff-body{flex:1;display:flex;flex-direction:column}
+.aff-body b{font-size:.92rem;color:#5a4a54}
+.aff-body small{font-size:.74rem;color:#a09098;line-height:1.5}
+.aff-badge{font-size:.68rem;color:#c48ba0;background:#fdf0f4;border:1px solid #f0d8e2;border-radius:12px;padding:3px 10px;white-space:nowrap;flex-shrink:0}
+.aff-note{font-size:.66rem;color:#c8b8c0;margin-top:4px}
 
 .footer{text-align:center;padding:32px 16px;font-size:.72rem;color:#c8b8c0}
 .footer a{color:#b08a9a;text-decoration:none}
@@ -234,7 +246,21 @@ function showResult(){
         <p>「${r.msg}」</p>
       </div>
 
-      <div class="ad-slot" id="ad-result"></div>
+      <div class="aff">
+        <div class="aff-head serif">🔮 前世の記憶を、プロの占い師がさらに深く</div>
+        <div class="aff-sub">この診断結果をもとに、あなたの魂のルーツを本格鑑定。</div>
+        <a class="aff-card" href="https://px.a8.net/svt/ejp?a8mat=4B1O1N+1JDFWA+2PEO+C510X" target="_blank" rel="nofollow sponsored noopener" onclick="gtag('event','affiliate_click',{quiz:'zense',svc:'coconala'})">
+          <span class="aff-ic">🌱</span>
+          <span class="aff-body"><b>ココナラ占い</b><small>500円から気軽に相談できる占いマーケット</small></span>
+          <span class="aff-badge">初回割引</span>
+        </a>
+        <a class="aff-card" href="https://px.a8.net/svt/ejp?a8mat=4B1O1N+2D5456+2QD4+5Z6WX" target="_blank" rel="nofollow sponsored noopener" onclick="gtag('event','affiliate_click',{quiz:'zense',svc:'will'})">
+          <span class="aff-ic">🌟</span>
+          <span class="aff-body"><b>電話占いウィル</b><small>口コミ高評価の実力派鑑定士に今すぐ相談</small></span>
+          <span class="aff-badge">初回特典</span>
+        </a>
+        <div class="aff-note">※広告 ／ 鑑定は各サービスの提供です</div>
+      </div>
 
       <div class="share">
         <button class="share-btn line" onclick="window.open('https://social-plugins.line.me/lineit/share?url=${url}&text='+encodeURIComponent('前世診断やったら「${r.nm}」だった🔮 あなたもやってみて👇'),'_blank');gtag('event','share',{method:'LINE'})">LINEで共有</button>
@@ -248,11 +274,6 @@ function showResult(){
       </a>
     </div>`;
   window.scrollTo({top:0,behavior:'smooth'});
-  // AdSense dynamic insert
-  try{
-    const ad=document.getElementById('ad-result');
-    if(ad){ad.innerHTML='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6327505164684489" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>';(adsbygoogle=window.adsbygoogle||[]).push({});}
-  }catch(e){}
 }
 </script>
 </body>
